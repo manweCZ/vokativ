@@ -18,7 +18,7 @@ class Name
      * @param boolean|null $isLastName
      * @return string Jméno v 5. pádu
      */
-    public function vokativ($name, $isWoman = null, $isLastName = null)
+    public function vokativ(string $name, bool $isWoman = null, bool $isLastName = null): string
     {
         if (gettype($name) !== 'string') {
             throw new InvalidArgumentException('`$name` has to be string');
@@ -53,7 +53,7 @@ class Name
      * @param string $name Jméno v prvním pádu
      * @return boolean Rozhodne, jeslti je jméno mužské
      */
-    public function isMale($name)
+    public function isMale(string $name): bool
     {
         if (gettype($name) !== 'string') {
             throw new InvalidArgumentException('`$name` has to be string');
@@ -68,7 +68,7 @@ class Name
         return $sex !== 'w';
     }
 
-    protected function vokativMan($name)
+    protected function vokativMan(string $name): string
     {
         list($match, $suffix) = $this->getMatchingSuffix(
             $name,
@@ -82,7 +82,7 @@ class Name
         return $name . $suffix;
     }
 
-    protected function vokativWomanFirstName($name)
+    protected function vokativWomanFirstName(string $name): string
     {
         if (mb_substr($name, -1) === 'a') {
             return mb_substr($name, 0, -1) . 'o';
@@ -90,12 +90,12 @@ class Name
         return $name;
     }
 
-    protected function vokativWomanLastName($name)
+    protected function vokativWomanLastName(string $name): string
     {
         return $name;
     }
 
-    protected function getMatchingSuffix($name, $suffixes)
+    protected function getMatchingSuffix(string $name, $suffixes): array
     {
         // it is important(!) to try suffixes from longest to shortest
         foreach (range(mb_strlen($name), 1) as $length) {
